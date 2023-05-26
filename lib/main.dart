@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_meals_app/categories_screen.dart';
+import 'package:flutter_meals_app/screens/categories_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -19,6 +19,9 @@ class App extends StatelessWidget {
   const App({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(theme: mytheme, home: CategoriesScreen());
+    return MaterialApp(
+      theme: mytheme,
+      home: const CategoriesScreen(),
+    );
   }
 }
