@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/data/category_dummy_data.dart';
 import 'package:flutter_meals_app/models/category.dart';
+import 'package:flutter_meals_app/models/meals.dart';
 import 'package:flutter_meals_app/screens/meals_screen.dart';
 
 class CategoriesGridItem extends StatelessWidget {
@@ -11,7 +12,16 @@ class CategoriesGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-       
+        print("${category.id} - ${category.title} is tapped");
+
+        List<Meal> selectedMeal = [];
+        for(Meal meal in dummyMeals) {
+          if (meal.categories.contains(category.id)) {
+            selectedMeal.add(meal);
+          }
+        }
+        print("Length : ${selectedMeal.length}");
+        MealsScreen(title: category.title,meals: selectedMeal);
       },
       splashColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(16),
