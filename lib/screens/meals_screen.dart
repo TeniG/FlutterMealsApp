@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/models/meals.dart';
+import 'package:flutter_meals_app/widgets/meals_list_item.dart';
 
 class MealsScreen extends StatelessWidget {
   const MealsScreen({super.key, required this.title, required this.meals});
@@ -10,7 +11,13 @@ class MealsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget mainContent = Center(
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        const Text("ohh could not find anything..."),
+         Text(
+          "ohh could not find anything...",
+          style: Theme.of(context)
+              .textTheme
+              .headlineLarge!
+              .copyWith(color: Theme.of(context).colorScheme.onBackground),
+        ),
         const SizedBox(height: 10),
         Text(
           "Please try some other catgory..",
@@ -26,8 +33,7 @@ class MealsScreen extends StatelessWidget {
       mainContent = ListView.builder(
           itemCount: meals.length,
           itemBuilder: (ctx, index) {
-            return Text(meals[index].title,
-            style: const TextStyle(color: Colors.white),);
+            return MealsListItem(meal: meals[index]);
           });
     }
 

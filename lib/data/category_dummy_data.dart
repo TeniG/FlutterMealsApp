@@ -9,6 +9,11 @@ import 'package:flutter_meals_app/models/meals.dart';
     color: Colors.purple,
   ),
   Category(
+    id: 'c12',
+    title: 'Burgers',
+    color: Colors.green,
+  ),
+  Category(
     id: 'c2',
     title: 'Quick & Easy',
     color: Colors.red,
@@ -53,6 +58,11 @@ import 'package:flutter_meals_app/models/meals.dart';
     id: 'c7',
     title: 'Breakfast',
     color: Colors.lightBlue,
+  ),
+  Category(
+    id: 'c11',
+    title: 'Donuts',
+    color: Colors.yellowAccent,
   ),
 ];
 
