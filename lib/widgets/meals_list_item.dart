@@ -5,7 +5,7 @@ import 'package:flutter_meals_app/widgets/meals_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealsListItem extends StatelessWidget {
-  const MealsListItem({super.key, required this.meal, required this.onSelectedMeal});
+  const MealsListItem({super.key, required this.meal, required this.onSelectedMeal,});
   final Meal meal;
   final void Function(Meal meal) onSelectedMeal;
 

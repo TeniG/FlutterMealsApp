@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/models/meals.dart';
 
 class MealDetailsScreen extends StatelessWidget {
-  const MealDetailsScreen({super.key, required this.meal});
+  const MealDetailsScreen({super.key, required this.meal, required this.onToggleMealFavrourite});
 
   final Meal meal;
+  final void Function(Meal meal) onToggleMealFavrourite;
 
   Widget getSectionTitleWidget(BuildContext context, String title) {
     return Text(
@@ -39,6 +40,15 @@ class MealDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onToggleMealFavrourite(meal);
+            },
+            icon: const Icon(Icons.star),
+            color: Colors.yellow,
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
