@@ -140,7 +140,7 @@ const dummyMeals = [
     affordability: Affordability.pricey,
     complexity: Complexity.simple,
     imageUrl:
-        'https://cdn.pixabay.com/photo/2014/10/23/18/05/burger-500054_1280.jpg',
+        'https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/w_1000,h_684,c_limit/the-ultimate-hamburger.jpg',
     duration: 45,
     ingredients: [
       '300g Cattle Hack',

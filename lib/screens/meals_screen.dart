@@ -4,9 +4,9 @@ import 'package:flutter_meals_app/screens/meal_details_screen.dart';
 import 'package:flutter_meals_app/widgets/meals_list_item.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meals});
+  const MealsScreen({super.key, this.title, required this.meals});
   final List<Meal> meals;
-  final String title;
+  final String? title;
 
   void _onSelectedMeal(BuildContext context, Meal meal) {
     Navigator.of(context).push(MaterialPageRoute(builder: (ctx) {
@@ -48,8 +48,12 @@ class MealsScreen extends StatelessWidget {
           });
     }
 
+    if (title == null) {
+      return mainContent;
+    }
+
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(title: Text(title!)),
       body: mainContent,
     );
   }
