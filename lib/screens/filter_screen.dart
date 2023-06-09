@@ -4,7 +4,7 @@ import 'package:flutter_meals_app/utils/constants.dart';
 
 class FilterScreen extends StatelessWidget {
   FilterScreen({super.key});
-
+  
   bool _isGluttenFreeFilterSet = false;
   bool _isLactoseFreeFilterSet = false;
   bool _isVeganFilterSet = false;
