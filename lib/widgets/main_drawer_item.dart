@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 class MainDrawerItem extends StatelessWidget {
   
-  const MainDrawerItem({super.key,required this.icon,required this.title});
+  const MainDrawerItem({super.key,required this.icon,required this.title, required this.identifier, required this.onDrawerItemSelected});
   
   final String title;
+  final String identifier;
   final IconData icon;
+  final void Function(String) onDrawerItemSelected;
+
   @override
   Widget build(BuildContext context) {
     return  ListTile(
@@ -19,7 +22,9 @@ class MainDrawerItem extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 24)),
-            onTap: () {},
+            onTap: () {
+              onDrawerItemSelected(identifier);
+            },
           );
     
   }
