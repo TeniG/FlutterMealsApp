@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/screens/categories_screen.dart';
+import 'package:flutter_meals_app/screens/filter_screen.dart';
 import 'package:flutter_meals_app/screens/main_drawer.dart';
 import 'package:flutter_meals_app/screens/meals_screen.dart';
 import 'package:flutter_meals_app/models/meals.dart';
+
+import '../utils/constants.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -27,14 +30,12 @@ class _TabsScreenState extends State<TabsScreen> {
     if (isMealExist) {
       setState(() {
         favouriteMeals.remove(meal);
-              showSnackBar("Meal is no longer Favourite");
-
+        showSnackBar("Meal is no longer Favourite");
       });
     } else {
       setState(() {
         favouriteMeals.add(meal);
         showSnackBar("Meal marked as Favourite");
-
       });
     }
   }
@@ -43,6 +44,17 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       _selectedIndex = tabIndex;
     });
+  }
+
+
+//async awiat is required to get the future result
+  void _onDrawerItemSelected(String identifier) async {
+    Navigator.of(context).pop();
+    if (identifier != "meals") {
+      var filterResult = await Navigator.of(context).push<Map<Filter, bool>>(
+          MaterialPageRoute(builder: (ctx) => FilterScreen()));
+          print(filterResult);
+    }
   }
 
   @override
@@ -61,7 +73,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(activeTabTitle)),
-      drawer: const MainDrawer(),
+      drawer: MainDrawer(onDrawerItemSelected : _onDrawerItemSelected),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,

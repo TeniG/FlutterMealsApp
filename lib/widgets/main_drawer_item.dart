@@ -11,7 +11,7 @@ class MainDrawerItem extends StatelessWidget {
   final String title;
   final String identifier;
   final IconData icon;
-  final void Function(BuildContext,String) onDrawerItemSelected;
+  final void Function(String) onDrawerItemSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class MainDrawerItem extends StatelessWidget {
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: Theme.of(context).colorScheme.onBackground, fontSize: 24)),
       onTap: () {
-        onDrawerItemSelected(context,identifier);
+        onDrawerItemSelected(identifier);
       },
     );
   }
