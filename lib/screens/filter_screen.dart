@@ -3,8 +3,10 @@ import 'package:flutter_meals_app/widgets/filter_item.dart';
 import 'package:flutter_meals_app/utils/constants.dart';
 
 class FilterScreen extends StatelessWidget {
-  FilterScreen({super.key});
-  
+  FilterScreen({super.key, required this.currentFilters});
+
+  final Map<Filter, bool> currentFilters;
+
   bool _isGluttenFreeFilterSet = false;
   bool _isLactoseFreeFilterSet = false;
   bool _isVeganFilterSet = false;
@@ -32,6 +34,11 @@ class FilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _isGluttenFreeFilterSet = currentFilters[Filter.gluttenFree]!;
+    _isLactoseFreeFilterSet = currentFilters[Filter.lactoseFree]!;
+    _isVeganFilterSet = currentFilters[Filter.vegan]!;
+    _isVegeterianFilterSet = currentFilters[Filter.vegeterian]!;
+
     return Scaffold(
       appBar: AppBar(title: const Text("Filters")),
       body: WillPopScope(
