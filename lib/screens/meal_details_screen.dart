@@ -45,7 +45,7 @@ class MealDetailsScreen extends ConsumerWidget {
         actions: [
           IconButton(
             onPressed: () {
-              //favouriteMealProvider.notifier give access to StateNotifier
+              //favouriteMealProvider.notifier give access to StateNotifier class
               final isMealAdded = ref
                   .read(favouriteMealProvider.notifier)
                   .toggleFavouriteMeal(meal);

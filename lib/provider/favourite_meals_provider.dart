@@ -1,11 +1,13 @@
 import 'package:flutter_meals_app/models/meals.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+//List<Meal> will be managed by this Notifier.
 class FavouriteMealProvider extends StateNotifier<List<Meal>> {
-  FavouriteMealProvider() : super([]);
+  FavouriteMealProvider() : super([]);// initalizing the List<Meal>
 
-  //Note: state consist of List of meals which cannot be edited so add/remove in list won't work.
+  //Note: state consist of List of meals which cannot be edited so add/remove in list won't work. we should assign new list.
   bool toggleFavouriteMeal(Meal m) {
+    //state will hold the data i.e List<Meal>
     final isMealFavourite = state.contains(m);
 
     if (isMealFavourite) {
@@ -23,7 +25,7 @@ class FavouriteMealProvider extends StateNotifier<List<Meal>> {
 final favouriteMealProvider =
     // StateNotifierProvider Parameter
     // First Parameter : Provider which would be called.
-    // Second Parameter:  Data which Provider will return 
+    // Second Parameter:  Data which FavouriteMealProvider will return 
     StateNotifierProvider<FavouriteMealProvider, List<Meal>>((ref) {
       return FavouriteMealProvider();
     }

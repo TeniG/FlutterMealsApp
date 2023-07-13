@@ -79,7 +79,11 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         availableMeals: availableMeals);
 
     if (_selectedIndex == 1) {
-    
+    /* The riverpod package automatically extracts the "state" property
+    value from the notifier class that belongs to the provider.Hence,
+    ref.watch() yields List<Meal> here (instead of Notifier class )
+    */
+
     // Consumer added
       activePage = MealsScreen(
           title: "",
