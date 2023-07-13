@@ -5,10 +5,10 @@ import 'package:flutter_meals_app/screens/categories_screen.dart';
 import 'package:flutter_meals_app/screens/filter_screen.dart';
 import 'package:flutter_meals_app/screens/main_drawer.dart';
 import 'package:flutter_meals_app/screens/meals_screen.dart';
-import 'package:flutter_meals_app/models/meals.dart';
-import 'package:flutter_meals_app/utils/constants.dart';
+
 import 'package:flutter_meals_app/provider/meals_provider.dart';
 import 'package:flutter_meals_app/provider/favourite_meals_provider.dart';
+import 'package:flutter_meals_app/provider/filters_provider.dart';
 
 const kInitialFilters = {
   Filter.gluttenFree: false,
@@ -27,9 +27,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedIndex = 0;
-  Map<Filter, bool> _selectedFilters = kInitialFilters;
 
- 
   void _onSelectedTab(int tabIndex) {
     setState(() {
       _selectedIndex = tabIndex;
@@ -39,57 +37,50 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 //async await is required to get the future result
   void _onDrawerItemSelected(String identifier) async {
     Navigator.of(context).pop();
-    if (identifier != "meals") {
-      var filterResult = await Navigator.of(context).push<Map<Filter, bool>>(
-          MaterialPageRoute(
-              builder: (ctx) =>
-                  FilterScreen(currentFilters: _selectedFilters)));
 
-      setState(() {
-        _selectedFilters = filterResult ?? kInitialFilters;
-      });
+    if (identifier != "meals") {
+      await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-
     //Consumer
     final dummyMealsFromProvider = ref.watch(mealsProvider);
+    final activeFilters = ref.watch(filtersProvider);
 
     final availableMeals = dummyMealsFromProvider.where((meal) {
-      if (_selectedFilters[Filter.gluttenFree]! && !meal.isGlutenFree) {
+      if (activeFilters[Filter.gluttenFree]! && !meal.isGlutenFree) {
         return false;
       }
-      if (_selectedFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
+      if (activeFilters[Filter.lactoseFree]! && !meal.isLactoseFree) {
         return false;
       }
-      if (_selectedFilters[Filter.vegeterian]! && !meal.isVegetarian) {
+      if (activeFilters[Filter.vegeterian]! && !meal.isVegetarian) {
         return false;
       }
-      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
+      if (activeFilters[Filter.vegan]! && !meal.isVegan) {
         return false;
       }
       return true;
     }).toList();
 
     String activeTabTitle = "Categories";
-
-    Widget activePage = CategoriesScreen(
-        availableMeals: availableMeals);
+    Widget activePage = CategoriesScreen(availableMeals: availableMeals);
 
     if (_selectedIndex == 1) {
-    /* The riverpod package automatically extracts the "state" property
+      /* The riverpod package automatically extracts the "state" property
     value from the notifier class that belongs to the provider.Hence,
     ref.watch() yields List<Meal> here (instead of Notifier class )
     */
 
-    // Consumer added
+      // Consumer added
       activePage = MealsScreen(
-          title: "",
-          meals: ref.watch(favouriteMealProvider)
+        title: "",
+        meals: ref.watch(favouriteMealProvider),
       );
-      
+
       activeTabTitle = "Favourite Meals";
     }
 

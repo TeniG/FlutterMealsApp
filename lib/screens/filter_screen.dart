@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_meals_app/widgets/filter_item.dart';
-import 'package:flutter_meals_app/utils/constants.dart';
+import 'package:flutter_meals_app/provider/filters_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilterScreen extends StatelessWidget {
-  FilterScreen({super.key, required this.currentFilters});
-
-  final Map<Filter, bool> currentFilters;
+class FilterScreen extends ConsumerWidget {
+  FilterScreen({super.key});
 
   bool _isGluttenFreeFilterSet = false;
   bool _isLactoseFreeFilterSet = false;
@@ -33,24 +32,35 @@ class FilterScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    _isGluttenFreeFilterSet = currentFilters[Filter.gluttenFree]!;
-    _isLactoseFreeFilterSet = currentFilters[Filter.lactoseFree]!;
-    _isVeganFilterSet = currentFilters[Filter.vegan]!;
-    _isVegeterianFilterSet = currentFilters[Filter.vegeterian]!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilter = ref.watch(filtersProvider);
+
+    _isGluttenFreeFilterSet = activeFilter[Filter.gluttenFree]!;
+    _isLactoseFreeFilterSet = activeFilter[Filter.lactoseFree]!;
+    _isVeganFilterSet = activeFilter[Filter.vegan]!;
+    _isVegeterianFilterSet = activeFilter[Filter.vegeterian]!;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Filters")),
       body: WillPopScope(
         onWillPop: () async {
-          //This value will be sent to the screen from where it was pushed/launched.
-          Navigator.of(context).pop({
+          //Consummer added so we no need to send the data back.
+          ref.read(filtersProvider.notifier).setSelectedFilters({
             Filter.gluttenFree: _isGluttenFreeFilterSet,
             Filter.lactoseFree: _isLactoseFreeFilterSet,
             Filter.vegan: _isVeganFilterSet,
             Filter.vegeterian: _isVegeterianFilterSet
           });
-          return false; // don't call the pop again.
+
+          // //This value will be sent to the screen from where it was pushed/launched.
+          // Navigator.of(context).pop({
+          //   Filter.gluttenFree: _isGluttenFreeFilterSet,
+          //   Filter.lactoseFree: _isLactoseFreeFilterSet,
+          //   Filter.vegan: _isVeganFilterSet,
+          //   Filter.vegeterian: _isVegeterianFilterSet
+          // });
+          //return false; // don't call the pop again.
+          return true;
         },
         child: Column(
           children: [
