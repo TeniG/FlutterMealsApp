@@ -1,46 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_meals_app/provider/filters_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilterItem extends StatefulWidget {
-  FilterItem(
-      {super.key,
-      required this.title,
-      required this.subtitle,
-      required this.itemIdentifier,
-      required this.isItemChecked,
-      required this.onItemCheckedChanged});
+class FilterItem extends ConsumerWidget {
+  const FilterItem({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.itemIdentifier,
+  });
 
   final String title;
   final String subtitle;
-  final String itemIdentifier;
-  bool isItemChecked;
-  final void Function(String, bool) onItemCheckedChanged;
+  final Filter itemIdentifier;
 
   @override
-  State<StatefulWidget> createState() {
-    return _FilterItemState();
-  }
-}
-
-class _FilterItemState extends State<FilterItem> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final activeFilters = ref.watch(filtersProvider);
     return SwitchListTile(
-      title: Text(widget.title,
+      title: Text(title,
           style: Theme.of(context)
               .textTheme
               .titleLarge!
               .copyWith(color: Theme.of(context).colorScheme.onBackground)),
-      subtitle: Text(widget.subtitle,
+      subtitle: Text(subtitle,
           style: Theme.of(context)
               .textTheme
               .labelMedium!
               .copyWith(color: Theme.of(context).colorScheme.onBackground)),
-      value: widget.isItemChecked,
+      value: activeFilters[itemIdentifier]!,
       onChanged: (isChecked) {
-        widget.onItemCheckedChanged(widget.itemIdentifier, isChecked);
-        setState(() {
-          widget.isItemChecked = isChecked;
-        });
+        ref.read(filtersProvider.notifier).setFilter(itemIdentifier, isChecked);
       },
       activeColor: Theme.of(context).colorScheme.tertiary,
       contentPadding: const EdgeInsets.only(left: 34, right: 22),

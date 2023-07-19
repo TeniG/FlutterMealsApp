@@ -40,7 +40,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
 
     if (identifier != "meals") {
       await Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
+          .push(MaterialPageRoute(builder: (ctx) => const FilterScreen()));
     }
   }
 
