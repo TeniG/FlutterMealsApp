@@ -19,13 +19,13 @@ class MealDetailsScreen extends ConsumerWidget {
     );
   }
 
-  List<Widget> getSectionDetailsWidget(
-      BuildContext context, List<String> list) {
+  List<Widget> getSectionDetailsWidget(BuildContext context, List<String> list) {
     List<Widget> widgetList = [];
-    for (final element in list) {
+
+    for (final str in list) {
       widgetList.add(
         Text(
-          element,
+          str,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
@@ -37,10 +37,31 @@ class MealDetailsScreen extends ConsumerWidget {
     return widgetList;
   }
 
+
+  Widget getTypeOFMeal(BuildContext context,Meal meal) {
+   
+    String glutenFree = (meal.isGlutenFree) ? "Gluten-Free" : "";
+    String lactoseFree = (meal.isLactoseFree) ? "Lactose-Free" : "";
+    String vegan = (meal.isVegan) ? "Vegan" : "";
+    String vegeterian  = (meal.isVegetarian) ? "Vegeterian" : "";
+
+    String typeOfMeal = "$glutenFree, $lactoseFree, $vegan, $vegeterian";
+   
+    return Text(
+          typeOfMeal,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+              ),
+        );
+   
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final favouriteMeals = ref.watch(favouriteMealProvider);
     final isMealFavourite = favouriteMeals.contains(meal);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(meal.title),
@@ -74,6 +95,10 @@ class MealDetailsScreen extends ConsumerWidget {
               height: 300,
               width: double.infinity,
             ),
+            const SizedBox(height: 14),
+            getSectionTitleWidget(context, "Meal Type"),
+            const SizedBox(height: 14),
+            getTypeOFMeal(context,meal),
             const SizedBox(height: 14),
             getSectionTitleWidget(context, "Ingredients"),
             const SizedBox(height: 14),
