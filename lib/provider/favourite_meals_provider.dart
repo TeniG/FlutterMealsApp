@@ -9,10 +9,10 @@ class FavouriteMealProvider extends StateNotifier<List<Meal>> {
   bool toggleFavouriteMeal(Meal m) {
     //state will hold the data i.e List<Meal>
     final isMealFavourite = state.contains(m);
-
+print ("Provider isMealFavourite : ${isMealFavourite}");
     if (isMealFavourite) {
       //new list is return using where method
-      state = state.where((meal) => meal.id == m.id).toList();
+      state = state.where((meal) => meal.id != m.id).toList();
       return false;
     } else {
       // assigned new list along with new meal.
