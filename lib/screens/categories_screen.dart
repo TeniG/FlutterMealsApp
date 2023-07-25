@@ -82,14 +82,17 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       builder: (context, child) => SlideTransition(
         //poition : Its an animation Offset and not an value between 0 and 1
         // so we use drive method which will give us the value between 0 and 1 along with other two values
-        position: _animationController.drive(
-           //Animation between two values
-          Tween( 
-            begin: const Offset(0,0.3), // 0 means no offest, 1: 100% animation, offest can be between 0 and 1  
-            end: const Offset(0,0),
-          )  
-        ), 
-        child: child, 
+        position: Tween(
+          //Animation between two values
+          begin: const Offset(0, 0.3), // 0 means no offest, 1: 100% animation, offest can be between 0 and 1
+          end: const Offset(0, 0),
+        ).animate(    //animate used for the CurvedAnimation to use different types of curve
+          CurvedAnimation(    
+            parent: _animationController,
+            curve: Curves.easeInOut,
+          ),
+        ),
+        child: child,
       ),
     );
   }
