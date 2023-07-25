@@ -79,7 +79,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 ))
             .toList(),
       ),
-      builder: (context, child) => SlideTransition(
+      builder: (context, child) => SlideTransition( // SlideTransition are how they should animate.
         //poition : Its an animation Offset and not an value between 0 and 1
         // so we use drive method which will give us the value between 0 and 1 along with other two values
         position: Tween(
