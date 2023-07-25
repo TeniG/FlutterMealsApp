@@ -19,7 +19,8 @@ class MealDetailsScreen extends ConsumerWidget {
     );
   }
 
-  List<Widget> getSectionDetailsWidget(BuildContext context, List<String> list) {
+  List<Widget> getSectionDetailsWidget(
+      BuildContext context, List<String> list) {
     List<Widget> widgetList = [];
 
     for (final str in list) {
@@ -37,24 +38,21 @@ class MealDetailsScreen extends ConsumerWidget {
     return widgetList;
   }
 
-
-  Widget getTypeOFMeal(BuildContext context,Meal meal) {
-   
+  Widget getTypeOFMeal(BuildContext context, Meal meal) {
     String glutenFree = (meal.isGlutenFree) ? "Gluten-Free" : "";
     String lactoseFree = (meal.isLactoseFree) ? "Lactose-Free" : "";
     String vegan = (meal.isVegan) ? "Vegan" : "";
-    String vegeterian  = (meal.isVegetarian) ? "Vegeterian" : "";
+    String vegeterian = (meal.isVegetarian) ? "Vegeterian" : "";
 
     String typeOfMeal = "$glutenFree, $lactoseFree, $vegan, $vegeterian";
-   
+
     return Text(
-          typeOfMeal,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-              ),
-        );
-   
+      typeOfMeal,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+    );
   }
 
   @override
@@ -72,15 +70,23 @@ class MealDetailsScreen extends ConsumerWidget {
               final isMealAdded = ref
                   .read(favouriteMealProvider.notifier)
                   .toggleFavouriteMeal(meal);
-                 
+
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: Text((isMealAdded)
                       ? "Meal added as Favourite"
                       : " Meal no longer Favourite")));
             },
-            icon: Icon(
-              (isMealFavourite) ? Icons.star : Icons.star_border,
+            icon: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) {
+                return RotationTransition(
+                    turns: animation, child: child); //how should it transition
+              },
+              child: Icon(
+                (isMealFavourite) ? Icons.star : Icons.star_border,
+                key: ValueKey(isMealFavourite), // to intimate flutter that same type of widget but value is different.
+              ),
             ),
             color: (isMealFavourite) ? Colors.yellow : Colors.grey,
           ),
@@ -98,7 +104,7 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(height: 14),
             getSectionTitleWidget(context, "Meal Type"),
             const SizedBox(height: 14),
-            getTypeOFMeal(context,meal),
+            getTypeOFMeal(context, meal),
             const SizedBox(height: 14),
             getSectionTitleWidget(context, "Ingredients"),
             const SizedBox(height: 14),
