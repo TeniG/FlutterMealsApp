@@ -79,9 +79,17 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 ))
             .toList(),
       ),
-      builder: (context, child) => Padding(
-        padding: EdgeInsets.only(top: 100 - _animationController.value * 100),
-        child: child, // child is the above Gridview
+      builder: (context, child) => SlideTransition(
+        //poition : Its an animation Offset and not an value between 0 and 1
+        // so we use drive method which will give us the value between 0 and 1 along with other two values
+        position: _animationController.drive(
+           //Animation between two values
+          Tween( 
+            begin: const Offset(0,0.3), // 0 means no offest, 1: 100% animation, offest can be between 0 and 1  
+            end: const Offset(0,0),
+          )  
+        ), 
+        child: child, 
       ),
     );
   }
